@@ -72,7 +72,8 @@ is still bit-for-bit deterministic.
 
 Conventional Commits 1.0.0 always. Flow: `<type>/<name>` from `main` → merge to `testing` →
 once it works, merge to `release` (with a CHANGELOG entry) → `release` into `main`, tag `vX.Y.Z`,
-GitHub release. All git actions go through the `git-workflow` agent (`/flow <step>`).
+GitHub release → **backsend**: merge `main` into `release` and `testing` (`chore` commits).
+All git actions go through the `git-workflow` agent (`/flow <step>`).
 
 - **Release assets:** none yet. The GitHub release ships the auto-generated source archives.
   If a build artifact is ever added, put the command that produces it here.
