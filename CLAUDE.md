@@ -3,7 +3,13 @@
 Guidance for Claude Code (and humans) working in **DOOMie**, a fork of id Software's
 DOOM source release (Linux DOOM 1.10, 1997-12-23, GPL-2.0 — see [LICENSE.TXT](LICENSE.TXT)).
 
-The deeper knowledge base lives in [docs/](docs/README.md). Read the relevant topic doc
+**What DOOMie is becoming:** a round-based co-op zombie shooter with DOOM's look and speed,
+built Windows-first (SDL2) and kept portable. Compatibility with the original DOOM
+(IWADs, demos, save games) is **not** a goal. Before you start any feature, check it against
+[docs/vision.md](docs/vision.md) (goals, non-goals, content rules) and
+[docs/roadmap.md](docs/roadmap.md). If a request falls outside them, say so before you build it.
+
+The engine knowledge base lives in [docs/](docs/README.md). Read the relevant topic doc
 before changing a subsystem.
 
 ## Repository layout
@@ -35,9 +41,12 @@ cd sndserv && make                               # -> sndserver (optional)
 - The code is 1997, 32-bit C. It does not build cleanly on modern 64-bit toolchains without
   porting work. See [docs/building-and-porting.md](docs/building-and-porting.md).
 
-There are no tests. To verify a change, play a demo (`-playdemo demo1`) or run
-`-timedemo demo1` and compare the result. Demo playback only stays in sync if the simulation
-is still bit-for-bit deterministic.
+This is the stock 1997 build. The Windows SDL2/CMake build is roadmap milestone M0. Update this
+section when that build lands.
+
+There are no tests. Demos recorded with our own build are the best regression check: a demo
+only plays back in sync if the simulation is still bit-for-bit deterministic, which co-op
+netplay also depends on.
 
 ## Coding conventions (match the existing code)
 
@@ -60,13 +69,17 @@ is still bit-for-bit deterministic.
 
 ## Invariants — do not break
 
-1. **Determinism.** Game logic runs at `TICRATE` (35 Hz) from `ticcmd_t` inputs only. No wall
-   clock, floats, uninitialised reads, or `M_Random` inside `P_*`/`G_Ticker` paths.
+1. **Determinism.** Lockstep co-op netplay depends on it. Game logic runs at `TICRATE` (35 Hz)
+   from `ticcmd_t` inputs only. No wall clock, floats, uninitialised reads, or `M_Random` inside
+   `P_*`/`G_Ticker` paths. This covers the zombie round logic too.
 2. **Static limits** (`MAXVISPLANES 128`, `MAXDRAWSEGS 256`, `MAXVISSPRITES 128`,
    `MAXINTERCEPTS 128`, `MAXPLATS 30`, ...). Overflowing them crashes the game or corrupts
-   memory. If you raise one, document it in [docs/fork-notes.md](docs/fork-notes.md).
-3. **Shareware/commercial gating** in `IdentifyVersion` and `W_*` must stay (see `README.b`).
-4. **License.** Everything here is GPL-2.0. Keep the copyright headers.
+   memory. A zombie horde will hit them, so raising them is fine, but document it in
+   [docs/fork-notes.md](docs/fork-notes.md).
+3. **Platform separation.** OS/SDL calls only in the `i_*` files, so the Linux and Android ports stay possible.
+4. **Content.** No id Software or Activision assets or names. Never commit the `e/`
+   reference photos. See [docs/vision.md](docs/vision.md#content-and-ip).
+5. **License.** Everything here is GPL-2.0. Keep the copyright headers.
 
 ## Git workflow
 
@@ -81,6 +94,8 @@ All git actions go through the `git-workflow` agent (`/flow <step>`).
 
 ## Documentation
 
-- Every feature gets an entry in [CHANGELOG.md](CHANGELOG.md) when it's promoted to `release`.
+- Every feature gets an entry in [CHANGELOG.md](CHANGELOG.md) when it's promoted to `release`,
+  and gets ticked off or moved to *Done* in [docs/roadmap.md](docs/roadmap.md).
+- New feature ideas go into the roadmap (Planned, Maybe or Rejected) once they've been judged against the vision.
 - Fork-specific technical decisions (raised limits, porting fixes, demo/save compatibility
   breaks) also go in [docs/fork-notes.md](docs/fork-notes.md).

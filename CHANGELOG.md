@@ -5,6 +5,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), versioning: [S
 
 ## [Unreleased]
 
+### Added
+- Project vision, roadmap, and a `README.md` describing DOOMie as a round-based co-op zombie shooter (docs/project-vision)
+
+### Changed
+- CLAUDE.md rules updated for the new direction: compatibility with the original DOOM dropped, platform-separation and content rules added (docs/project-vision)
+
 ## [0.0.1] - 2026-11-17
 
 ### Added
