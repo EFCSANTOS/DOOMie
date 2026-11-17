@@ -17,8 +17,9 @@ As of the creation of this knowledge base (2026-11-17), DOOMie has **no code cha
 
 ## Goals
 
-_TBD: what this fork is for (modern port, new features, research, ...). Fill this in when the
-direction is set._
+A round-based co-op zombie shooter with DOOM's look and speed. See [vision.md](vision.md) and
+[roadmap.md](roadmap.md). Compatibility with the original DOOM data, demos and save games is
+deliberately dropped, so the table below records breaks for our own reference rather than as warnings.
 
 ## Change log
 

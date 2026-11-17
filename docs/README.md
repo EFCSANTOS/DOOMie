@@ -5,6 +5,8 @@ Topic docs for the DOOMie fork of DOOM (Linux DOOM 1.10). Start with
 
 | Doc | Read it when you're... |
 |---|---|
+| [vision.md](vision.md) | deciding whether something belongs in the game: goals, non-goals, content rules |
+| [roadmap.md](roadmap.md) | looking for what to build next, or where an idea stands |
 | [architecture.md](architecture.md) | getting oriented: the main loop, the tic model, and the module map |
 | [rendering.md](rendering.md) | changing anything that draws: BSP, walls, visplanes, sprites |
 | [playsim.md](playsim.md) | changing game logic: thinkers, mobjs, collision, AI, specials |
